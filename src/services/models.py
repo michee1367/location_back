@@ -244,7 +244,7 @@ def generate_jsonschema(model_class, isForModif=False):
             
             schema["properties"][field_name] = {
                     "anyOf": [
-                        {"type": "string", "format": "date-time"},
+                        {"type": "string", "format": "date"},
                         {"type": "null"}
                     ]
                 }
