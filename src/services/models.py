@@ -240,7 +240,8 @@ def generate_jsonschema(model_class, isForModif=False):
         elif "date" in field_type :
             json_type = "date"
             
-        if field_type == "date-time" :
+            
+        if json_type == "date-time" :
             
             schema["properties"][field_name] = {
                     "anyOf": [
@@ -248,7 +249,7 @@ def generate_jsonschema(model_class, isForModif=False):
                         {"type": "null"}
                     ]
                 }
-        elif field_type == "date" :
+        elif json_type == "date" :
             schema["properties"][field_name] = {
                     "anyOf": [
                         {"type": "string", "format": "date"},
