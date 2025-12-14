@@ -802,7 +802,7 @@ def delete_data(table_name, id):
     
 def update_data(table_name, id, data):
     model_class = get_model_class_by_tablename(table_name)
-
+    print(data)
     if not model_class:
         return {"error": "Model not found"}, 404
     
@@ -823,11 +823,14 @@ def update_data(table_name, id, data):
             relations = form_schema.get("relations")
             for key in relations :
                 table_relation = relations[key]
-                schema_relation = tranform_tablename_to_classname(table_relation)
-                #print(schema_relation)
+                schema_relation = get_model_class_by_tablename(table_relation)
+                print(schema_relation)
+                print(table_relation)
+                print(key)
+                print(data.get(key))
                 if not schema_relation :
                     return {"error": "Model : unsupported yet"}, 400
-                if data[key] :
+                if data.get(key) :
                     entity_relation = schema_relation.query.filter(schema_relation.id == data[key]).first()
                     #print(entity_relation)
                     if not entity_relation :
@@ -849,8 +852,12 @@ def update_data(table_name, id, data):
 
         return {"message": "Data update successfully"}, 201
     except exceptions.ValidationError as e:
+        print("################################")
+        print(e.message)
+        
         return {"error": "Validation failed", "details": e.message}, 400
     except Exception as e:
+        print(e)
         return {"error": "update failed", "details": str(e)}, 500
 """
 def get_all_records_enr(table_name, page=1, per_page=10) -> PaginateReturn:
